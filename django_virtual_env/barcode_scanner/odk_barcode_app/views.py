@@ -1,3 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+def ona_connector(request):
+    return HttpResponse("This will dispaly ONA data")
