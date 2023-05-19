@@ -1,4 +1,4 @@
-{% extends "master.html" %}
+{% extends "master_template.html" %}
 
 {% block title %}
   <h1>Login</h1>
@@ -6,10 +6,13 @@
 
 
 {% block content %}
+
+  <p><a href="/">HOME</a></p> <!--This is a link to return to the main/Landing/root page-->
+
   <h1>Login Page</h1>
   
   <p>Please sacn the Barcode</p>
   
-  <p>Back to <a href="/odk_barcode_app">Landing Page</a></p>
+  <p>View record <a href="record.html"></a></p>
   
 {% endblock %}
