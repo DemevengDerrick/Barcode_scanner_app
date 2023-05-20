@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.template import loader
 from pyzbar import pyzbar
 import cv2
+import requests
 
 def ona_connector(request):
     template = loader.get_template('login.html')
@@ -57,7 +58,15 @@ def scanner(request):
 
 def display_data(request):
     template = loader.get_template('record.html')
-    return HttpResponse(template.render())
+    rq = requests.get("https://esurv.afro.who.int/api/v1/data/8604.json", auth=("gis_blueline", "G1sb!ue")).json()
+
+    for record in rq:
+        if record['epid_num'] == "ENV-ETH-SOM-FAF-SAG-17-001":
+            break
+
+    context = {'rq': record}
+    
+    return HttpResponse(template.render(context, request))
 
 def main(request):
     template = loader.get_template('main.html')

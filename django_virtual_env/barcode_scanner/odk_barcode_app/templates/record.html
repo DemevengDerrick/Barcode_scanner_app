@@ -10,9 +10,20 @@
   <p><a href="/">HOME</a></p> <!--This is a link to return to the main/Landing/root page-->
 
   <h1>Record Page</h1>
-  
-  <p>Please sacn the Barcode</p>
-  
-  <p>Back to <a href="/odk_barcode_app">Landing Page</a></p>
+  <br>
+
+  <table>
+    <tr>
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+    {% for key, value in rq.items %}
+      <tr>
+        <td>{{ key}}</td>
+        <td>{{ value}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+  <br>
   
 {% endblock %}

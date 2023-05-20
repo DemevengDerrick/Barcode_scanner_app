@@ -11,8 +11,30 @@
 
   <h1>Login Page</h1>
   
-  <p>Please sacn the Barcode</p>
+  <form action="action_page.php" method="post">
+    <div class="imgcontainer">
+      <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.0lghnoEEoGk5z21yaosGWgHaFj%26pid%3DApi&f=1&ipt=db60d0a876b67181ac188a259242c54a7bbb02f2dd6e11cb7af04b8784c3db1a&ipo=images" alt="Avatar" class="avatar">
+    </div>
   
-  <p><a href="odk_barcode_app/">View Record </a></p>
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+  
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+  
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+  
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" class="cancelbtn" onclick="document.location='/record'">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+  
+  <p><a href="record">View Record </a></p>
   
 {% endblock %}
