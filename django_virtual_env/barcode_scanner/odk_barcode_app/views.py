@@ -27,7 +27,16 @@ def scanner(request):
         # Loop over detected barcodes
         for barcode in barcodes:
             # Extract barcode data
+            # Draw a bounding box around the barcode
+            
             barcode_data = barcode.data.decode("utf-8")
+
+            (x, y, w, h) = barcode.rect
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+
+            # Display the barcode data on the frame
+            cv2.putText(frame, barcode_data, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+            
             break  # Exit the loop after the first barcode is detected
 
         # Check for 'q' key press to quit the loop
