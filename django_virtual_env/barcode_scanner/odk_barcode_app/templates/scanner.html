@@ -6,15 +6,18 @@
 
 
 {% block content %}
+  <div class="container">
 
-  <p><a href="/">HOME</a></p> <!--This is a link to return to the main/Landing/root page-->
+    <p><a href="/">HOME</a></p> <!--This is a link to return to the main/Landing/root page-->
 
-  <h1>Scanner Page</h1>
-  
-  <p>Please scan the Barcode</p>
+    <h1>Scanner Page</h1>
+    
+    <p>Please scan the Barcode</p>
 
-  <p>Site Code: {{ barcode }}</p>
-  
-  <p><a href="/odk_barcode_app/login">Login</a></p>
+    <p>Site Code: {{ barcode }}</p>
+    
+    <p><a href="/odk_barcode_app/login">Login</a></p>
+
+  </div>
   
 {% endblock %}

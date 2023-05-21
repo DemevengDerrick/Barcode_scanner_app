@@ -4,13 +4,17 @@
   ODK Scanner Application
 {% endblock %}
 
-
 {% block content %}
+  <div class="container" style="align-items: center;">
+    
+    <h2>ODK Scanner application</h2>
 
-  <h1>ODK Scanner application</h1>
+    <p>This application will scan a barcode on an ES sample container, login to the ODK instance and pulls the corresponding record</p>
+    
+    <p><b><a href="odk_barcode_app/">Scan Barcode </a></b></p>
 
-  <p>This application will scan a barcode on an ES sample container, login to the ODK instance and pulls the corresponding record</p>
-  
-  <p><a href="odk_barcode_app/">Scan Barcode </a></p>
-  
+    {% if barcode == "No barcode found." %}
+      <h2 id="failed_scan" style="color: red;">Scanning failed, please try again</h2>
+    {% endif %}
+  </div>
 {% endblock %}
