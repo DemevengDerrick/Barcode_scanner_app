@@ -12,20 +12,20 @@
 
     <br>
 
-    {% if rq == "No matching record found" %}
+    {% if rq.0 == "No matching record found" %}
 
-      <h2 style="color: red;"><b> No matching record found.</b></h2>
+      <h2 style="color: red;"><b> No matching record found for sample {{rq.0}}</b></h2>
 
     {% else %}
 
-      <h2 style="color: green;">Record for sample : <b>ENV-CAR-DGS-GDG-ETS-23-004</b></h2>
+      <h2 style="color: green;">Record for sample : <b>{{rq.1}}</b></h2>
 
       <table class="table table-striped">
         <tr>
           <th>Key</th>
           <th>Value</th>
         </tr>
-        {% for key, value in rq.items %}
+        {% for key, value in rq.0.items %}
           <tr>
             <td>{{ key}}</td>
             <td>{{ value}}</td>

@@ -60,27 +60,44 @@ def scanner(request):
         return HttpResponse(template_main.render(context, request))
     else:
         return HttpResponse(template_login.render(context, request))
+    
+def get_Form_id(usr, pwd):
+    rq = requests.get("https://esurv.afro.who.int/api/v1/forms", auth=(usr, pwd)).json()
+
+    #supervision_forms_names = ["Environmental Surveillance Collection Supervision Form","Formulário de supervisão de vigilância ambiental: Moçambique", "Environmental Surveillance Surveillance Supervisory Checklist BURKINA FASO", "Environmental Surveillance Surveillance Supervisory Checklist","Environmental Surveillance Collection Supervision Form BENIN"]
+    form_id = []
+
+    for i in rq:
+        if i["title"].startswith("Environmental Surveillance Collection Supervision Form") or i["title"].startswith("Formulário de supervisão de vigilância ambiental") or i["title"].startswith("Environmental Surveillance Surveillance Supervisory Checklist"):
+            form_id.append(i["formid"])
+    
+    return form_id
 
 def display_data(request):
 
     if request.method == 'POST':
         name = request.POST['uname']
         psw = request.POST['psw']
+    
+    form_id = get_Form_id(name, psw)
 
     template = loader.get_template('record.html')
     #rq = requests.get("https://esurv.afro.who.int/api/v1/data/8604.json", auth=("gis_blueline", "G1sb!ue")).json()
-    rq = requests.get("https://esurv.afro.who.int/api/v1/data/8604.json", auth=(name, psw)).json()
-
-    record = ""
+    rq = requests.get("https://esurv.afro.who.int/api/v1/data/{}.json".format(form_id[0]), auth=(name, psw)).json()
+    print(form_id)
+    print(form_id[1])
+    record = None
     for rec in rq:
-        if rec['epid_num'] == "ENV-ETH-SOM-FAF-SAG-17-001":
+        print("rec['epid_num']:", rec['epid_num'])
+        #print("Expected value:", "ENV-ETH-SOM-FAF-SAG-17-001")
+        if rec['epid_num'] == "ENV-ETH-ADD-BOL-BTP-17-001":
             record = rec
             break
 
-    if len(record) == 0:
-        context = {'rq': "No matching record found"}
+    if record == None:
+        context = {'rq': ["No matching record found", barcode_data]}
     else:
-        context = {'rq': record}
+        context = {'rq': [record, barcode_data]}
 
     return HttpResponse(template.render(context, request))
 

@@ -1,42 +1,15 @@
-import cv2
-from pyzbar import pyzbar
+import requests
 
-def scan_barcode():
-    # Initialize the video capture object
-    cap = cv2.VideoCapture(0)
+def get_Form_id():
+    rq = requests.get("https://esurv.afro.who.int/api/v1/forms", auth=("gis_blueline", "G1sb!ue")).json()
 
-    while True:
-        # Read a frame from the camera
-        ret, frame = cap.read()
+    #supervision_forms_names = ["Environmental Surveillance Collection Supervision Form","Formulário de supervisão de vigilância ambiental: Moçambique", "Environmental Surveillance Surveillance Supervisory Checklist BURKINA FASO", "Environmental Surveillance Surveillance Supervisory Checklist","Environmental Surveillance Collection Supervision Form BENIN"]
+    form_id = []
 
-        # Convert the frame to grayscale
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    for i in rq:
+        if i["title"].startswith("Environmental Surveillance Collection Supervision Form") or i["title"].startswith("Formulário de supervisão de vigilância ambiental") or i["title"].startswith("Environmental Surveillance Surveillance Supervisory Checklist"):
+            form_id.append(i["formid"])
+    
+    return form_id
 
-        # Use the pyzbar library to detect and decode barcodes
-        barcodes = pyzbar.decode(gray)
-
-        # Loop over detected barcodes
-        for barcode in barcodes:
-            # Extract barcode data
-            barcode_data = barcode.data.decode("utf-8")
-
-            # Draw a bounding box around the barcode
-            (x, y, w, h) = barcode.rect
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-
-            # Display the barcode data on the frame
-            cv2.putText(frame, barcode_data, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
-
-        # Display the resulting frame
-        cv2.imshow("Barcode Scanner", frame)
-
-        # Check for 'q' key press to quit the loop
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-    # Release the video capture object and close all windows
-    cap.release()
-    cv2.destroyAllWindows()
-
-# Call the function to start scanning barcodes using the camera
-scan_barcode()
+get_Form_id()
