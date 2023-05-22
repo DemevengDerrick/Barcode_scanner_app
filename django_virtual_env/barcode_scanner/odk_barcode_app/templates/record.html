@@ -8,17 +8,17 @@
 {% block content %}
 
   <div class="container">
-    <p><a href="/">HOME</a></p> <!--This is a link to return to the main/Landing/root page-->
+    <p><b><a href="/">HOME</a></b></p> <!--This is a link to return to the main/Landing/root page-->
 
     <br>
 
     {% if rq.0 == "No matching record found" %}
 
-      <h2 style="color: red;"><b> No matching record found for sample {{rq.0}}</b></h2>
+      <h2 style="color: red; text-align: center;"><b> No matching record found for sample {{rq.0}}</b></h2>
 
     {% else %}
 
-      <h2 style="color: green;">Record for sample : <b>{{rq.1}}</b></h2>
+      <h2 style="color: green; text-align: center;">Record for sample : <b>{{rq.1}}</b></h2>
 
       <table class="table table-striped">
         <tr>

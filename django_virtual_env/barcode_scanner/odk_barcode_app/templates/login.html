@@ -7,9 +7,9 @@
 
 {% block content %}
   <div class="container">
-    <p><a href="/">HOME</a></p> <!--This is a link to return to the main/Landing/root page-->
+    <p><b><a href="/">HOME</a></b></p> <!--This is a link to return to the main/Landing/root page-->
 
-    <h2 style="color: green;">Login to view record : <b>{{barcode}}</b></h2>
+    <h2 style="color: green; text-align: center;">Login to view record : <b>{{barcode}}</b></h2>
     
     <form method="post" action="record">
       {% csrf_token %}
