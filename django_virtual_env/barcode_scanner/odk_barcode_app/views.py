@@ -17,8 +17,9 @@ def scanner(request):
     global barcode_data
 
     barcode_data = "No barcode found."
+    barcode_detected = False
 
-    while True:
+    while not barcode_detected:
         # Read a frame from the camera
         ret, frame = cap.read()
 
@@ -40,11 +41,12 @@ def scanner(request):
             # Display the barcode data on the frame
             cv2.putText(frame, barcode_data, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
             
+            barcode_detected = True
             break  # Exit the loop after the first barcode is detected
 
         # Check for 'q' key press to quit the loop
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+            #break
 
         cv2.imshow("Scanner", frame)
         cv2.waitKey(1)
@@ -83,16 +85,20 @@ def display_data(request):
 
     template = loader.get_template('record.html')
     #rq = requests.get("https://esurv.afro.who.int/api/v1/data/8604.json", auth=("gis_blueline", "G1sb!ue")).json()
-    rq = requests.get("https://esurv.afro.who.int/api/v1/data/{}.json".format(form_id[0]), auth=(name, psw)).json()
-    print(form_id)
-    print(form_id[1])
+    rq = requests.get("https://esurv.afro.who.int/api/v1/data/{}.json".format(form_id[1]), auth=(name, psw)).json()
+    #print(form_id)
+    #print(form_id[1])
     record = None
     for rec in rq:
-        print("rec['epid_num']:", rec['epid_num'])
+        print(rec)
+        #print("Barcode_Stamp : {}".format(rec['barcode_stamp']))
         #print("Expected value:", "ENV-ETH-SOM-FAF-SAG-17-001")
-        if rec['epid_num'] == "ENV-ETH-ADD-BOL-BTP-17-001":
-            record = rec
-            break
+        try:
+            if rec['barcode_stamp'] == barcode_data:
+                record = rec
+                break
+        except:
+            pass
 
     if record == None:
         context = {'rq': ["No matching record found", barcode_data]}
