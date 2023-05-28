@@ -90,7 +90,7 @@ def display_data(request):
     #print(form_id[1])
     record = None
     for rec in rq:
-        print(rec)
+        #print(rec)
         #print("Barcode_Stamp : {}".format(rec['barcode_stamp']))
         #print("Expected value:", "ENV-ETH-SOM-FAF-SAG-17-001")
         try:
